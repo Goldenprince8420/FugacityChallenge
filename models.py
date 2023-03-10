@@ -150,7 +150,7 @@ def ensemble_model(estimators, X_train, Y_train, X_test, Y_test):
 
 
 def automl_model(X_train, Y_train, X_test, Y_test):
-    clf_automl = AutoML(total_time_limit=10)
+    clf_automl = AutoML()
     clf_automl.fit(X_train, Y_train)
 
     Y_pred = clf_automl.predict(X_train)
