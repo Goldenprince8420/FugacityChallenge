@@ -13,14 +13,8 @@ from data import *
 from sklearn.model_selection import GridSearchCV
 from utils import *
 
-path = "data"
-data = get_data(path)
-train, test = prepare_data(data)
-X_train, Y_train = train
-X_test, Y_test = test
 
-
-def logistic_regression():
+def logistic_regression(X_train, Y_train, X_test, Y_test):
     clf_logr = LogisticRegression()
     # create a dictionary of all values we want to test for parameters
     params_logr = {}
@@ -35,7 +29,7 @@ def logistic_regression():
     return clf_logr
 
 
-def decision_tree():
+def decision_tree(X_train, Y_train, X_test, Y_test):
     clf_dt = DecisionTreeClassifier()
     # create a dictionary of all values we want to test for parameters
     params_dt = {}
@@ -50,7 +44,7 @@ def decision_tree():
     return clf_dt
 
 
-def support_vector_machine():
+def support_vector_machine(X_train, Y_train, X_test, Y_test):
     clf_svc = SVC()
     # create a dictionary of all values we want to test for parameters
     params_svc = {}
@@ -65,7 +59,7 @@ def support_vector_machine():
     return clf_svc
 
 
-def random_forest():
+def random_forest(X_train, Y_train, X_test, Y_test):
     clf_rf = RandomForestClassifier()
     # create a dictionary of all values we want to test for parameters
     params_rf = {}
@@ -80,7 +74,7 @@ def random_forest():
     return clf_rf
 
 
-def xgboost():
+def xgboost(X_train, Y_train, X_test, Y_test):
     clf_xgb = XGBClassifier(
         booster="dart",
         eta=0.1,
@@ -105,7 +99,7 @@ def xgboost():
     return clf_xgb
 
 
-def catboost():
+def catboost(X_train, Y_train, X_test, Y_test):
     clf_cat = CatBoostClassifier(iterations=100)
     # create a dictionary of all values we want to test for parameters
     params_cat = {}
@@ -120,7 +114,7 @@ def catboost():
     return clf_cat
 
 
-def lightgbm():
+def lightgbm(X_train, Y_train, X_test, Y_test):
     clf_lgbm = lgb.LGBMClassifier(
         boosting_type='dart',
         objective="multiclass",
@@ -144,23 +138,7 @@ def lightgbm():
     return clf_lgbm
 
 
-# logr_classifier = logistic_regression()
-# dt_classifier = decision_tree()
-# svc_classifier = support_vector_machine()
-# rf_classifier = random_forest()
-xgb_classifier = xgboost()
-# cat_classifier = catboost()
-lgbm_classifier = lightgbm()
-
-xgb = xgb_classifier.best_estimator_
-# cat = cat_classifier.best_estimator_
-lgbm = lgbm_classifier.best_estimator_
-#
-# # create a dictionary of our models
-estimators = [("xgb", xgb), ("lgbm", lgbm)]
-
-
-def ensemble_model():
+def ensemble_model(estimators, X_train, Y_train, X_test, Y_test):
     # create our voting classifier, inputting our models
     clf_ensemble = VotingClassifier(estimators, voting="hard")
     clf_ensemble.fit(X_train, Y_train)
@@ -171,10 +149,7 @@ def ensemble_model():
     return clf_ensemble
 
 
-ensemble_classifier = ensemble_model()
-
-
-def automl_model():
+def automl_model(X_train, Y_train, X_test, Y_test):
     clf_automl = AutoML(total_time_limit=10)
     clf_automl.fit(X_train, Y_train)
 
@@ -185,9 +160,33 @@ def automl_model():
     return clf_automl
 
 
-def automl_exploration():
+def automl_exploration(data):
     EDA.extensive_eda(data, data["RH_type"], save_path="./data/results")
 
 
-# automl_exploration()
-# automl_classifier = automl_model()
+if __name__ == "__main__":
+    path = "data"
+    data = get_data(path)
+    train, test = prepare_data(data)
+    X_train, Y_train = train
+    X_test, Y_test = test
+
+    # logr_classifier = logistic_regression(X_train, Y_train, X_test, Y_test)
+    # dt_classifier = decision_tree(X_train, Y_train, X_test, Y_test)
+    # svc_classifier = support_vector_machine(X_train, Y_train, X_test, Y_test)
+    # rf_classifier = random_forest(X_train, Y_train, X_test, Y_test)
+    xgb_classifier = xgboost(X_train, Y_train, X_test, Y_test)
+    # cat_classifier = catboost(X_train, Y_train, X_test, Y_test)
+    lgbm_classifier = lightgbm(X_train, Y_train, X_test, Y_test)
+
+    xgb = xgb_classifier.best_estimator_
+    # cat = cat_classifier.best_estimator_
+    lgbm = lgbm_classifier.best_estimator_
+    #
+    # # create a dictionary of our models
+    estimators = [("xgb", xgb), ("lgbm", lgbm)]
+
+    ensemble_classifier = ensemble_model(estimators, X_train, Y_train, X_test, Y_test)
+
+    # automl_exploration(data)
+    # automl_classifier = automl_model(X_train, Y_train, X_test, Y_test)
