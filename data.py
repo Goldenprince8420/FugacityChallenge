@@ -17,13 +17,13 @@ def get_data(data_path):
 
 
 def get_test_data(data_path):
-    test_data = pd.read_csv(os.path.join(data_path, "Test_Data.csv"))
+    test_data = pd.read_csv(os.path.join(data_path, "Test_Data.csv"), index_col = "index")
     test_data["DateTime"] = test_data["Date"] + ' ' + test_data["Time"]
     test_data['date&time'] = test_data['DateTime'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'))
     test_data["timestamp"] = pd.to_datetime(test_data['date&time']).astype('int64')/10**18
     # le = preprocessing.LabelEncoder()
     # train_data["RH_type"] = le.fit_transform(train_data["RH_type"])
-    test_data = test_data.drop(["Date", "Time", "date&time", "DateTime"], axis=1)
+    test_data = test_data.drop(["Date", "Time", "date&time", "DateTime", "index"], axis=1)
     test_set_ids = test_data.pop("id")
     test_set = test_data.values
     return test_set, test_set_ids
