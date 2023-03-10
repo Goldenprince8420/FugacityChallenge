@@ -13,7 +13,7 @@ def get_data(data_path):
     le = preprocessing.LabelEncoder()
     train_data["RH_type"] = le.fit_transform(train_data["RH_type"])
     train_data = train_data.drop(["Date", "Time", "date&time", "DateTime"], axis=1)
-    return train_data
+    return train_data, le
 
 
 def get_whole_data(train_data):
@@ -74,5 +74,5 @@ def get_normalized_data(train_data):
 
 if __name__ == "__main__":
     path = "data"
-    data = get_data(path)
+    data, le = get_data(path)
     train, test = prepare_data(data)
