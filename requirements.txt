@@ -5,6 +5,7 @@ numpy
 matplotlib
 seaborn
 scipy
+scikit-learn
 tensorflow
 cycler
 ipython
