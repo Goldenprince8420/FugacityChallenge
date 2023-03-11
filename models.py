@@ -138,6 +138,37 @@ def lightgbm(X_train, Y_train, X_test, Y_test):
     return clf_lgbm
 
 
+def lightgbm_model_final(X_train_, Y_train_, X_test_, Y_test_, parameters, is_optimized_parameters=False):
+    if is_optimized_parameters:
+        clf_lgbm = lgb.LGBMClassifier(
+            boosting_type='dart',
+            objective="multiclass",
+            **parameters
+        )
+    else:
+        clf_lgbm = lgb.LGBMClassifier(
+            boosting_type='dart',
+            objective="multiclass",
+            num_iterations=200,
+            # learning_rate=0.12,
+            num_leaves=48,
+            max_bin=300,
+            bagging_freq=40,
+            tree_learner="voting",
+        )
+    # create a dictionary of all values we want to test for parameters
+    # params_lgbm = {}
+    # # use gridsearch to test all values for parameters
+    # clf_lgbm = GridSearchCV(clf_lgbm, params_lgbm, cv=5)
+    clf_lgbm.fit(X_train_, Y_train_)
+
+    Y_pred = clf_lgbm.predict(X_train_)
+    model_evaluate(Y_train_, Y_pred, set_name="Train")
+    Y_pred = clf_lgbm.predict(X_test_)
+    model_evaluate(Y_test_, Y_pred, set_name="Test")
+    return clf_lgbm
+
+
 def ensemble_model(estimators, X_train, Y_train, X_test, Y_test):
     # create our voting classifier, inputting our models
     clf_ensemble = VotingClassifier(estimators, voting="hard")

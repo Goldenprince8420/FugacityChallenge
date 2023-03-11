@@ -5,3 +5,5 @@ shap
 lime
 pytorch-tabnet
 mljar-supervised
+bayesian-optimization
+hyperopt

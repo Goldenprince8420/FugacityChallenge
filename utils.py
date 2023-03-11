@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import pprint
 from time import time
+import seaborn as sns
 
 
 def model_evaluate(Y_train, Y_pred, set_name="Train"):
@@ -30,7 +31,6 @@ def model_evaluate(Y_train, Y_pred, set_name="Train"):
 def report_perf(optimizer, X, y, title="model", callbacks=None):
     """
     A wrapper for measuring time and performances of different optmizers
-
     optimizer = a sklearn or a skopt optimizer
     X = the training set
     y = our target
@@ -57,3 +57,12 @@ def report_perf(optimizer, X, y, title="model", callbacks=None):
     pprint.pprint(best_params)
     print()
     return best_params
+
+
+def plot_outliers(frame, cols, com_col='RH_type'):
+    for col in cols:
+        sns.boxplot(x=com_col, y=col, data=frame)
+        plt.show()
+        # plt.savefig(fig_save_dir + "outlier_fig_" + col + ".png")
+
+

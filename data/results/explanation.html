@@ -37089,25 +37089,25 @@
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divK7Z61SE9DKLVXMD"></div>
+        <div class="lime top_div" id="top_divVZK3ATRDAEZQJ8X"></div>
         
         <script>
-        var top_div = d3.select('#top_divK7Z61SE9DKLVXMD').classed('lime top_div', true);
+        var top_div = d3.select('#top_divVZK3ATRDAEZQJ8X').classed('lime top_div', true);
         
             var pp_div = top_div.append('div')
                                 .classed('lime predict_proba', true);
             var pp_svg = pp_div.append('svg').style('width', '100%');
-            var pp = new lime.PredictProba(pp_svg, ["0", "1", "2", "3", "4"], [6.168372544790399e-05, 0.00010708134992178851, 5.349668341529891e-05, 0.9882550348321407, 0.011522703409074393]);
+            var pp = new lime.PredictProba(pp_svg, ["0", "1", "2", "3", "4"], [4.627946260191136e-05, 2.5010230020622113e-05, 2.0487634127632578e-05, 0.9986848687609786, 0.0012233539122711]);
             
         
         var exp_div;
             var exp = new lime.Explanation(["0", "1", "2", "3", "4"]);
         
                 exp_div = top_div.append('div').classed('lime explanation', true);
-                exp.show([["12.32 < T <= 18.81", 0.09736365020222303], ["0.78 < AH <= 1.04", -0.03248527383890176], ["122.00 < NOx(GT) <= 257.00", 0.02729566289707989], ["CO(GT) > 2.60", 0.011151420477847195], ["PT08.S1(CO) > 1221.50", 0.01037712484043555]], 1, exp_div);
+                exp.show([["18.81 < T <= 25.18", 0.044134019339732024], ["0.78 < AH <= 1.04", -0.041746048087396716], ["910.12 < PT08.S2(NMHC) <= 1118.75", 0.014772242362767174], ["PT08.S5(O3) <= 709.75", -0.009897092246450327], ["timestamp <= 1.09", -0.009153746940794258]], 1, exp_div);
                 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["T", "17.85", 0.09736365020222303], ["AH", "0.93", -0.03248527383890176], ["NOx(GT)", "167.00", 0.02729566289707989], ["CO(GT)", "3.30", 0.011151420477847195], ["PT08.S1(CO)", "1357.25", 0.01037712484043555]], 1, raw_div);
+            exp.show_raw_tabular([["T", "19.23", 0.044134019339732024], ["AH", "0.79", -0.041746048087396716], ["PT08.S2(NMHC)", "913.75", 0.014772242362767174], ["PT08.S5(O3)", "613.75", -0.009897092246450327], ["timestamp", "1.08", -0.009153746940794258]], 1, raw_div);
         
         </script>
         </body></html>
