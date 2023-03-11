@@ -34,6 +34,13 @@ def get_test_data(data_path):
     return test_set, test_set_ids
 
 
+def get_final_test_data(data_path, do_feature_engineering=False):
+    test_set, test_set_ids = get_test_data(data_path)
+    if do_feature_engineering:
+        test_set = engineered_data(test_set)
+    return test_set, test_set_ids
+
+
 def get_whole_data(train_data):
     # Analysis for train set
     train_set_ids = train_data.pop("id")
@@ -87,7 +94,7 @@ def get_final_data(data_path, do_remove_outlier=False, do_feature_engineering=Fa
         X_test = engineered_data(X_test)
     if do_remove_outlier:
         plot_outliers(frame=X_train, cols=cols, com_col=Y_train)
-    return (X_train, Y_train), (X_test, Y_test)
+    return (X_train, Y_train), (X_test, Y_test), le_
 
 
 if __name__ == "__main__":
